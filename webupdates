@@ -1,0 +1,35 @@
+#!/bin/sh
+
+USAGE="Usage: $0 data-name CSS-selector curl-options..."
+DATA_PATH="${DATA_PATH:-$HOME/.webupdates}"
+
+set -e
+
+name="$1"
+css_selector="$2"
+
+if test -z "$3"
+then
+  echo "$USAGE" 1>&2
+  exit 1
+fi
+shift 2
+
+mkdir -p "$DATA_PATH"
+data_file="$DATA_PATH/$name"
+test -e "$data_file" || touch "$data_file"
+
+curl --silent "$@" | cssgrep "$css_selector" | w3m -T text/html > "$data_file.new"
+if diff -u "$data_file" "$data_file.new" > "$data_file.diff"
+then # no changes
+  rm -f "$data_file.new"
+else
+  cat - "$data_file.diff" <<EOF
+## ${name}
+
+$@
+
+EOF
+  mv "$data_file.new" "$data_file"
+fi
+rm -f "$data_file.diff"

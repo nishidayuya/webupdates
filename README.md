@@ -26,3 +26,14 @@ Enjoy `webupdates` command:
 ```
 $ webupdates data-name CSS-selector curl-options
 ```
+
+## Run periodically
+
+We can run on Cron.
+
+```
+# In /etc/cron.d/webupdates
+
+# Run webupdates at every 03:12.
+12 3 * * * root docker run -it /var/lib/webupdates:/var/lib/webupdates nishidayuya/webupdates ...
+```

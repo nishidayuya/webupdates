@@ -1,4 +1,4 @@
-# webupdates: A web page update checker command
+# `webupdates`: A web page update checker command
 
 ## Usage
 

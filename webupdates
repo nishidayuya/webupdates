@@ -1,6 +1,6 @@
 #!/bin/sh
 
-USAGE="Usage: $0 data-name CSS-selector curl-options..."
+USAGE="Usage: $0 data-name CSS-selector URI"
 DATA_PATH="${DATA_PATH:-$HOME/.webupdates}"
 
 set -e
@@ -19,7 +19,7 @@ mkdir -p "$DATA_PATH"
 data_file="$DATA_PATH/$name"
 test -e "$data_file" || touch "$data_file"
 
-curl --silent "$@" | cssgrep "$css_selector" | w3m -T text/html > "$data_file.new"
+webg --text --css-selector="$css_selector" "$@" > "$data_file.new"
 if diff -u "$data_file" "$data_file.new" > "$data_file.diff"
 then # no changes
   rm -f "$data_file.new"

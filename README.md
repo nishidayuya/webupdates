@@ -15,9 +15,11 @@ $ docker run -it -v $PWD/data:/var/lib/webupdates nishidayuya/webupdates \
 
 If you want to run `webupdates` directly, you must install following:
 
-* [curl](https://curl.haxx.se/)
-* [cssgrep](https://github.com/nono/cssgrep)
-* [w3m](http://w3m.sourceforge.net/)
+- [Mozilla Firefox](https://www.mozilla.org/)
+- [Geckodriver](https://github.com/mozilla/geckodriver/releases)
+- [Ruby](http://www.ruby-lang.org/)
+- [webg.gem](https://github.com/nishidayuya/webg)
+    - `gem install webg`
 
 Copy `webupdates` command to `PATH` environment directory and set executable permission.
 

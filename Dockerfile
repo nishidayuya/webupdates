@@ -1,13 +1,21 @@
-FROM ruby:2.5.0-alpine
+FROM ruby:3.0.1-alpine3.13
 MAINTAINER Yuya.Nishida.
 
 RUN set -x && \
-  apk add --no-cache --virtual build-dependencies build-base libxml2-dev libxslt-dev && \
-  gem install --no-doc --no-ri nokogiri && \
-  apk del build-dependencies && \
-  wget -O/usr/local/bin/cssgrep https://raw.githubusercontent.com/nono/cssgrep/ce02b340ea4fe3fa3131740d920a51e87b0ccbe7/cssgrep.rb && \
-  chmod a+x /usr/local/bin/cssgrep && \
-  apk add --no-cache w3m curl
+  mkdir /tmp/t01 && \
+  cd /tmp/t01 && \
+  \
+  apk add --no-cache firefox && \
+  \
+  GECKODRIVER_VERSION=0.29.1 && \
+  wget "https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz" && \
+  tar xf "geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz" && \
+  chmod a+x geckodriver && \
+  mv -fv geckodriver /usr/local/bin/ && \
+  \
+  gem install --no-document webg && \
+  \
+  rm -rf /tmp/t01
 
 COPY webupdates /usr/local/bin/
 ENV DATA_PATH=/var/lib/webupdates

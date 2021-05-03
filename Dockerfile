@@ -13,7 +13,7 @@ RUN set -x && \
   chmod a+x geckodriver && \
   mv -fv geckodriver /usr/local/bin/ && \
   \
-  gem install --no-document webg && \
+  gem install webg --no-document --version=0.1.0 && \
   \
   rm -rf /tmp/t01
 

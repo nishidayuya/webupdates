@@ -18,5 +18,5 @@ RUN set -x && \
   rm -rf /tmp/t01
 
 COPY webupdates /usr/local/bin/
-ENV DATA_PATH=/var/lib/webupdates
+ENV DATA_PATH /var/lib/webupdates
 ENTRYPOINT ["/usr/local/bin/webupdates"]

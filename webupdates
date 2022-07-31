@@ -19,7 +19,7 @@ mkdir -p "$DATA_PATH"
 data_file="$DATA_PATH/$name"
 test -e "$data_file" || touch "$data_file"
 
-webg --text --css-selector="$css_selector" "$@" > "$data_file.new"
+webg --squeezed-text --css-selector="$css_selector" "$@" > "$data_file.new"
 if diff -u "$data_file" "$data_file.new" > "$data_file.diff"
 then # no changes
   rm -f "$data_file.new"

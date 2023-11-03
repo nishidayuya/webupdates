@@ -20,16 +20,22 @@ data_file="$DATA_PATH/$name"
 test -e "$data_file" || touch "$data_file"
 
 webg --squeezed-text --css-selector="$css_selector" "$@" > "$data_file.new"
+trap "rm -f '$data_file.new' '$data_file.diff'" EXIT
+
+if test -s "$data_file.new"
+then
+  exit
+fi
+
 if diff -u "$data_file" "$data_file.new" > "$data_file.diff"
-then # no changes
-  rm -f "$data_file.new"
-else
-  cat - "$data_file.diff" <<EOF
+then
+  exit
+fi
+
+cat - "$data_file.diff" <<EOF
 ## ${name}
 
 $@
 
 EOF
-  mv "$data_file.new" "$data_file"
-fi
-rm -f "$data_file.diff"
+mv "$data_file.new" "$data_file"
